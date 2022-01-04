@@ -1,0 +1,77 @@
+<mvc:View controllerName="dzmitry.klimko.controller.ProductDetails"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:fo="sap.ui.layout.form"
+	xmlns:layout="sap.ui.layout">
+	<f:DynamicPage id="dynamicPageId">
+
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>productDetailsViewTitle}({odata>Name})"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>firstPageLinkText}" press="onNavToStoresList"/>
+						<Link text="{i18n>secondPageLinkText}" press="onNavBack"/>
+						<Link text="{i18n>thirdPageLinkText}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+
+		<f:header>
+			<f:DynamicPageHeader>
+				<fo:SimpleForm id="SimpleFormDisplay" editable="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" adjustLabelSpan="false" emptySpanXL="7" emptySpanL="5" emptySpanM="3" columnsXL="1" columnsL="1" singleContainerFullSize="false">
+					<fo:content>
+						<Label text="{i18n>productDetailsRatingLabel}" design="Bold"/>
+						<Text text="{odata>Rating}" />
+						<Label text="{i18n>productDetailsSpecsLabel}" design="Bold"/>
+						<Text text="{odata>Specs}" />
+						<Label text="{i18n>productDetailsSupplierInfoLabel}" design="Bold"/>
+						<Text text="{odata>SupplierInfo}"/>
+						<Label text="{i18n>productDetailsCompanyNameLabel}" design="Bold"/>
+						<Text text="{odata>ProductionCompanyName}"/>
+						<Label text="{i18n>productDetailsMadeInLabel}" design="Bold"/>
+						<Text text="{odata>MadeIn}"/>
+						<Label text="{i18n>productDetailsStatusLabel}" design="Bold"/>
+						<ObjectStatus class="sapUiSmallMarginBottom" text="{
+									path: 'odata>Status',
+									formatter: '.formatter.statusText'}" 
+								inverted="true" active="true" state="{= ${odata>Status} === 'OK' ?  'Indication04' :
+								${odata>Status} === 'STORAGE'? 'Indication03':  'Indication02'}"/>
+					</fo:content>
+				</fo:SimpleForm>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<layout:VerticalLayout width="100%" class="sapUiMediumMarginEnd">
+				<FlexBox width="100%" alignItems="Center">
+					<Label text="{i18n>productDetailsAuthorNameLabel}" class="sapUiSmallMarginEnd" labelFor="authorInput"/>
+					<Input value="{
+									path : 'Author',
+									type : 'sap.ui.model.type.String',
+									constraints : {
+									minLength: 2,
+									maxLength: 30
+									}
+								}" id="authorInput" class="sapUiSmallMarginEnd"  placeholder="{i18n>productDetailsAuthorNameInputPH}"/>
+					<Label class="sapUiSmallMargin" text="{i18n>productDetailsRatingLabel}"/>
+					<RatingIndicator value="{
+							path : 'Raiting',
+							type : 'sap.ui.model.type.Integer',
+							constraints : {
+							minimum: 1,
+							maximum: 5
+								}
+							}" id="ratingInput" class="sapUiTinyMargin" iconSize="1rem" tooltip="Rating Tooltip"/>
+				</FlexBox>
+				<FeedInput id="postInput" post="onCreateProductComment" placeholder="{i18n>productDetailsPostInputPH}"  icon ="sap-icon://person-placeholder"/>
+				<List id="idCommentsList" showSeparators="Inner" items="{odata>/ProductComments}">
+					<FeedListItem sender="{odata>Author}" text="{odata>Message}" info="Rating:{odata>Rating},Posted:}" timestamp="{odata>Posted}" convertLinksToAnchorTags="All"/>
+				</List>
+			</layout:VerticalLayout>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

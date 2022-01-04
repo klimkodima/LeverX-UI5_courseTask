@@ -1,0 +1,87 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Dialog id="editProductOrder" title="{i18n>editProductOrderTitle}" contentWidth="350px">
+		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" columnsL="1">
+			<f:content>
+				<Label text="{i18n>createProductNameInput}"/>
+				<Input id="editProductNameInput" valueStateText="{i18n>createProductNameInputEM}" value="{
+							path : 'Name',
+							type : 'sap.ui.model.type.String',
+							constraints : {
+										minLength: 3,
+										maxLength: 30
+							}
+						}" placeholder="{i18n>createProductNameInputPH}" required="true"/>
+				<Label text="{i18n>createProductPriceInput}" labelFor="productPriceInput"/>
+				<FlexBox alignItems="Center" renderType="Bare">
+					<Input id="editProductPriceInput" width="80%" type="Number" valueStateText="{i18n>createProductPriceInputEM}" value="{
+							path: 'Price',
+							type : 'sap.ui.model.type.Integer',
+							constraints : {
+							minimum: 1,
+							maximum: 10000
+							}
+						}" placeholder="{i18n>createProductPriceInputPH}" class="sapUiSmallMarginEnd" required="true"/>
+					<Label text="{i18n>carrency}"/>
+				</FlexBox>
+				<Label text="{i18n>createProductSpecsInput}"/>
+				<TextArea id="editProductSpecsInput" growing="true" growingMaxLines="7" width="100%" value="{
+						path : 'Specs',
+						type : 'sap.ui.model.type.String',
+						constraints : {
+						minLength: 3,
+						maxLength: 500
+						}
+					}" placeholder="{i18n>createProductSpecsInputPH}" required="true" valueStateText="{i18n>createProductSpecsInputEM}"/>
+				<Label text="{i18n>createProductRatingInput}"/>
+				<Input id="editProductRatingInput" type="Number" valueStateText="{i18n>createProductRatingInputEM}" value="{
+							path : 'Rating',
+							type : 'sap.ui.model.type.Integer',
+							constraints : {
+							minimum: 1,
+							maximum: 5
+						}
+					}" placeholder="{i18n>createProductRatingInputPH}" required="true"/>
+				<Label text="{i18n>createProductSupplierInfoInput}"/>
+				<TextArea id="editProductSupplierInfoInput" growing="true" growingMaxLines="7" width="100%" value="{
+								path : 'SupplierInfo',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+								minLength: 3,
+								maxLength: 300
+								}
+							}" placeholder="{i18n>createProductSupplierInfoInputPH}" required="true" valueStateText="{i18n>createProductSupplierInfoInputEM}"/>
+				<Label text="{i18n>createProductCountryInput}"/>
+				<Input value="{
+							path : 'MadeIn',
+							type : 'sap.ui.model.type.String',
+							constraints : {
+							minLength: 3,
+							maxLength: 30
+							}
+						}" id="editProductMadeInInput" placeholder="{i18n>createProductCountryInputPH}" required="true" valueStateText="{i18n>createProductCountryInputEM}"/>
+				<Label text="{i18n>createProductCompanyInput}"/>
+				<Input value="{
+							path : 'ProductionCompanyName',
+							type : 'sap.ui.model.type.String',
+							constraints : {
+							minLength: 3,
+							maxLength: 30
+							}
+						}" id="editProductProdCompInput" placeholder="{i18n>createProductCompanyInputPH}" required="true" valueStateText="{i18n>createProductCompanyInputEM}"/>
+				<Label text="{i18n>createProductStatusInput}"/>
+				<Select id="editProductStatusInput" selectedKey="{Status}" required="true">
+					<core:Item key="OK" text="{i18n>okStatusSelect}"/>
+					<core:Item key="STORAGE" text="{i18n>storageStatusSelect}"/>
+					<core:Item key="OUT_OF_STOCK" text="{i18n>outOfStockStatusSelect}"/>
+				</Select>
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button text="{i18n>edit}" press="onConfirmEditProduct" />
+			<Button text="{i18n>close}" press="onCancelEditProduct"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

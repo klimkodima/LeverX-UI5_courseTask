@@ -1,0 +1,68 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Dialog id="createStoreOrder" title="{i18n>createStoreOrderTitle}">
+		<f:SimpleForm maxContainerCols="1" layout="ResponsiveGridLayout" labelSpanL="12" labelSpanM="12" columnsL="1">
+			<f:content>
+				<Label text="{i18n>createStoreNameInput}"/>
+				<Input id="storeNameInput" valueStateText="{i18n>createStoreNameInputEM}" value="{
+						path : 'Name',
+						type : 'sap.ui.model.type.String',
+						constraints : {
+						minLength: 3,
+						maxLength: 30
+					}
+				}" placeholder="{i18n>createStoreNameInputPH}" required="true"/>
+				<Label text="{i18n>createStoreEmailInput}"/>
+				<Input id="storeEmailInput" valueStateText="{i18n>createStoreEmailInputEM}" value="{
+							path: 'Email',
+							type: '.customEMailType'
+						}" type="Email" placeholder="{i18n>createStoreEmailInputPH}" required="true"/>
+
+				<Label text="{i18n>createStorePhoneNumberInput}"/>
+				<MaskInput id="storePhoneNumberInput" mask="(CCC)-CC-CCC-CC-CC"  value="{
+								path : 'PhoneNumber',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+								}
+							}" placeholder="{i18n>createStorePhoneNumberInputPH}" valueStateText="{i18n>createStorePhoneNumberInputEM}" required="true">
+					<rules>
+						<MaskInputRule maskFormatSymbol="C" regex="[0-9]"/>
+					</rules>
+				</MaskInput>
+				<Label text="{i18n>createStoreAddressInput}"/>
+				<Input id="storeAddressInput" valueStateText="{i18n>createStoreAddressInputEM}" value="{
+							path : 'Address',
+							type : 'sap.ui.model.type.String',
+							constraints : {
+							minLength: 5,
+							maxLength: 100
+							}
+						}" placeholder="{i18n>createStoreAddressInputPH}" required="true"/>
+				<Label text="{i18n>createStoreDateInput}"/>
+				<DatePicker value="{
+								path : 'Established',
+								type : 'sap.ui.model.type.String',
+								constraints : {
+								minLength: 5,
+								maxLength: 100
+								}
+							}" id="storeEstablishedInput" required="true" valueStateText="{i18n>createStoreDateInputEM}"/>
+				<Label text="{i18n>createStoreFloorAreaInput}"/>
+				<Input value="{
+							path : 'FloorArea',
+							type : 'sap.ui.model.type.Integer',
+							constraints : {
+							minimum: 100,
+							maximum: 10000
+							}
+						}" id="storeFloorAreaInput" type="Number" placeholder="{i18n>createStoreFloorAreaInputPH}" required="true" valueStateText="{i18n>createStoreFloorAreaInputEM}"/>
+			</f:content>
+		</f:SimpleForm>
+
+		<buttons>
+			<Button text="{i18n>create}" press="onConfirmCreateStore" />
+			<Button text="{i18n>close}" press="onCancelCreateStore"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

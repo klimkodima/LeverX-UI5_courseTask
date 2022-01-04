@@ -1,0 +1,46 @@
+<mvc:View controllerName="dzmitry.klimko.controller.StoresOverview"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout" height="100%">
+	<f:DynamicPage id="dynamicPageId" showFooter="true">
+
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>storesOwerviewViewTitle}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>firstPageLinkText}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<SearchField id="searchField" search="onStoresSearch" width="auto"
+						showRefreshButton ="true" placeholder="{i18n>storesSearchPH}"/>
+			</f:DynamicPageHeader>
+		</f:header>
+
+		<f:content>
+			<layout:VerticalLayout width="100%" class="sapUiMediumMarginEnd">
+				<List growing="true" showUnread = "true" class="sapUiResponsiveMargin" width="auto" items="{odata>/Stores}" id="storesList">
+					<ObjectListItem  title="{odata>Name}" number="{odata>FloorArea}" numberUnit="{i18n>sq.m}"
+							press = "onShowStoreDetails" type="Navigation" >
+						<ObjectAttribute text="{odata>Address}"/>
+					</ObjectListItem>
+				</List>
+			</layout:VerticalLayout>
+		</f:content>
+
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type ="Accept" icon="sap-icon://add" press="onCreateStore" text="{i18n>create}"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

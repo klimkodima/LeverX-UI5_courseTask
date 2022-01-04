@@ -1,0 +1,122 @@
+{
+    "sap.app": {
+        "id": "dzmitry.klimko",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "dataSources": {
+            "stores": {
+                "uri": "http://localhost:3000/odata/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "useBatch": false,
+                    "defaultBindingMode": "TwoWay"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+            "sap_belize"
+        ]
+    },
+    "sap.ui5": {
+        "rootView": "dzmitry.klimko.view.App",
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "dzmitry.klimko.view",
+                "controlId": "RootApp",
+                "controlAggregation": "pages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [{
+                    "pattern": "",
+                    "name": "FirstPage",
+                    "target": [
+                        "firstPage"
+                    ]
+                },
+                {
+                    "pattern": "Store/{id}",
+                    "name": "SecondPage",
+                    "target": [
+                        "secondPage"
+                    ]
+                },
+                {
+                    "pattern": "Products/{id}",
+                    "name": "ThirdPage",
+                    "target": [
+                        "thirdPage"
+                    ]
+                }
+            ],
+
+            "targets": {
+                "firstPage": {
+                    "viewName": "StoresOverview",
+                    "viewId": "firstPage",
+                    "viewLevel": 1
+                },
+                "secondPage": {
+                    "viewName": "StoreDetails",
+                    "viewId": "secondPage",
+                    "viewLevel": 2
+                },
+                "thirdPage": {
+                    "viewName": "ProductDetails",
+                    "viewId": "thirdPage",
+                    "viewLevel": 3
+                },
+
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                }
+            }
+        },
+        "dependencies": {
+            "minUI5Version": "1.54.0",
+            "libs": {
+                "sap.m": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "dzmitry.klimko.i18n.i18n",
+                    "supportedLocales": ["en", "ru"],
+                    "fallbackLocale": "en",
+                    "bundleLocale": "ru"
+                }
+            },
+            "odata": {
+                "dataSource": "stores",
+                "settings": {
+                    "useBatch": false,
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "disableHeaderRequestForToken": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,147 @@
+<mvc:View controllerName="dzmitry.klimko.controller.StoreDetails"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:core="sap.ui.core"
+	xmlns:fo="sap.ui.layout.form" height="100%">
+	<f:DynamicPage id="dynamicPageId" showFooter="true" class="sapUiNoContentPadding">
+
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{i18n>storeDetailsViewTitle}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs>
+						<Link text="{i18n>firstPageLinkText}" press="onNavBack"/>
+						<Link text="{i18n>secondPageLinkText}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+		</f:title>
+
+		<f:header>
+			<f:DynamicPageHeader >
+				<fo:SimpleForm id="SimpleFormStore" editable="false" layout="ResponsiveGridLayout"
+				title="" labelSpanXL="4"  labelSpanM="4"  adjustLabelSpan="false" columnsXL="4" columnsL="4" columnsM="2" singleContainerFullSize="false">
+					<fo:content>
+						<core:Title text="" />
+						<Label text="{i18n>email}" design="Bold"/>
+						<Text text="{odata>Email}"/>
+						<Label text="{i18n>phoneNumber}" design="Bold"/>
+						<Text text="{
+							path: 'odata>PhoneNumber',
+							formatter: '.formatter.correctTel'
+							}"/>
+						<Label text="{i18n>address}" design="Bold"/>
+						<Text text="{odata>Address}"/>
+						<core:Title text="" />
+						<Label text="{i18n>ectablishedDate}" design="Bold"/>
+						<Text text="{
+							path: 'odata>Established',
+							formatter: '.formatter.correctDate'
+							}"/>
+						<Label text="{i18n>floorArea}" design="Bold"/>
+						<Text text="{odata>FloorArea}"/>
+					</fo:content>
+				</fo:SimpleForm>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content class="sapUiNoContentPadding">
+			<IconTabBar id="iconTabBar" select=".onQuickFilter" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter showAll="true" count="{appView>/allProductsCount}" text="{i18n>all}" key="all"/>
+					<IconTabSeparator/>
+					<IconTabFilter icon="sap-icon://message-success" iconColor="Positive" count="{appView>/okProductsCount}" text="{i18n>inStock}" key="inStock"/>
+					<IconTabFilter icon="sap-icon://message-warning" iconColor="Critical" count="{appView>/storageProductsCount}" text="{i18n>storage}" key="storage"/>
+					<IconTabFilter icon="sap-icon://message-error" iconColor="Negative" count="{appView>/out_of_stockProductsCount}" text="{i18n>outOfStock}" key="outStock"/>
+				</items>
+				<content>
+					<Table id="table" sticky="HeaderToolbar,ColumnHeaders" growing="true" inset="false" growingScrollToLoad="true" width="auto" items="{odata>rel_Products}">
+						<headerToolbar>
+							<OverflowToolbar>
+								<Title id="tableHeader" text="{i18n>storeDetailsTableTitle}"/>
+								<ToolbarSpacer/>
+								<SearchField id="searchProductsField" placeholder="{i18n>storeDetailsSearchPlaceholder}" search="onProductsSearch" width="auto">
+								</SearchField>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<HBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'Name')"/>
+									<Text id="nameColumnTitle" text="{i18n>tableNameColumnTitle}"/>
+								</HBox>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Phone">
+								<FlexBox alignItems="Center">
+									<Button id="sortByPrice" tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'Price')"/>
+									<Text text="{i18n>tablePriceColumnTitle}"/>
+								</FlexBox>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<FlexBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'Specs')"/>
+									<Text text="{i18n>tableSpecsColumnTitle}"/>
+								</FlexBox>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="Tablet">
+								<FlexBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'SupplierInfo')"/>
+									<Text text="{i18n>tableSupplierInfoColumnTitle}"/>
+								</FlexBox>
+							</Column>
+							<Column  minScreenWidth="Tablet">
+								<FlexBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'MadeIn')"/>
+									<Text text="{i18n>tableColumnCountryOfOriginTitle}"/>
+								</FlexBox>
+							</Column>
+							<Column  minScreenWidth="Tablet">
+								<FlexBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'ProductionCompanyName')"/>
+									<Text text="{i18n>tableColumnProdCompanyTitle}"/>
+								</FlexBox>
+							</Column>
+							<Column demandPopin="true" minScreenWidth="780px">
+								<FlexBox alignItems="Center">
+									<Button tooltip="Sort" type="Transparent" icon="sap-icon://sort" press="onSort($event,'Rating')"/>
+									<Text text="{i18n>tableColumnRaitingTitle}"/>
+								</FlexBox >
+							</Column>
+							<Column demandPopin="true" minScreenWidth="850px">
+							</Column>
+						</columns>
+						<items >
+							<ColumnListItem type="Navigation" press="onShowProductDetails">
+								<cells>
+									<ObjectIdentifier title="{odata>Name}"/>
+									<ObjectNumber number="{odata>Price}" unit="USD" />
+									<Text text ="{odata>Specs}" wrapping="false"/>
+									<Text text = "{odata>SupplierInfo}" wrapping="false"/>
+									<Text text = "{odata>MadeIn}"/>
+									<Text text = "{odata>ProductionCompanyName}"/>
+									<RatingIndicator maxValue="5" class="sapUiSmallMarginBottom" value="{odata>Rating}" iconSize="12px" tooltip="Rating Tooltip" />
+									<HBox width="6em">
+										<core:Icon src="sap-icon://edit" class="size5 sapUiSmallMargin" press="onEditProduct">
+										</core:Icon>
+										<core:Icon src="sap-icon://message-error" class="size5 sapUiSmallMargin" press="onDeleteProduct">
+										</core:Icon>
+									</HBox>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</IconTabBar>
+		</f:content>
+		<!-- DynamicPage Footer -->
+		<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type ="Accept" icon="sap-icon://add" text="{i18n>create}" press="onCreateProduct"/>
+				<Button type ="Reject" icon="sap-icon://add" text="{i18n>delete}" press="onDeleteStore"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>
